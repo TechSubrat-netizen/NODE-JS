@@ -1,0 +1,10 @@
+h1{
+    background-color:brown;
+    color:white;
+}
+p{
+    color:red;
+}
+p::first-letter{
+    color:green;
+}
