@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../CSS/index.css" rel="stylesheet">
+    <title>Form Example</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 10px 5px;
+            vertical-align: middle;
+        }
+
+        label {
+            font-weight: bold;
+            display: inline-block;
+            width: 100%;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .radio-group input {
+            margin-right: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <h1>Jspider</h1>
+        </div>
+        <div class="pages">
+            <h4><a href="/">Home</a></h4>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </div>
+        <div class="button">
+            <a href="/signup"><button>Sign up</button></a>
+        </div>
+    </nav>
+    <div>
+        <form action="" id="form">
+            <fieldset>
+                <table>
+                    <tr>
+                        <td><label for="fname">F-Name</label></td>
+                        <td><input type="text" id="fname" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><label for="lname">L-Name</label></td>
+                        <td><input type="text" id="lname" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email</label></td>
+                        <td><input type="email" id="email" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><label for="mobile" >Mobile</label></td>
+                        <td><input type="number" id="mobile" value=""></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password</label></td>
+                        <td><input type="password" id="password" value="current-password"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Gender</label></td>
+                        <td colspan="2" class="radio-group">
+                            <input type="radio" name="gender" id="male" value=""><label for="male">Male</label>
+                            <input type="radio" name="gender" id="female"><label for="female">Female</label>
+                            <input type="radio" name="gender" id="others" value=""><label for="others">Others</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button type="submit">Submit</button></td>
+                    </tr>
+                </table>
+            </fieldset>
+        </form>
+    </div>
+    <script>
+        let form=document.querySelector('#form')
+        let fname=document.querySelector('#fname')
+        let lname=document.querySelector('#lname')
+        let email=document.querySelector('#email')
+        let mobile=document.querySelector('#mobile')
+        let password=document.querySelector('#password')
+
+        form.addEventListener('submit',(e)=>{
+            e.preventDefault()
+            let obj={}
+            obj.fname=fname.value;
+            obj.lname=lname.value;
+            obj.email=email.value;
+            obj.mobile=mobile.value;
+            obj.password=password.value;
+            
+            let selectedGender = document.querySelector('input[name="gender"]:checked').value;
+            obj.gender = selectedGender 
+            
+            fetch('/signup',{
+                method:"POST",
+                headers:{"content-type":"application/json"},
+                body:JSON.stringify(obj)
+            }).then((res)=>res.json()).then(data=>{console.log(data);
+            })
+
+
+            fname.value=''
+            lname.value=''
+            email.value=''
+            mobile.value=''
+            password.value=''
+            selectedGender.value=''
+
+
+            
+            
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/CSS/index.css" rel="stylesheet" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav>
+      <div class="logo">
+        <h1>Jspider</h1>
+      </div>
+      <div class="pages">
+        <h4><a href="/">Home</a></h4>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </div>
+      <div class="button">
+        <a href="/signup"><button id="signup">Sign up</button></a>
+      </div>
+    </nav>
+    <h1>This is home page</h1>
+    <button id="send">Send Data</button>
+    <button id="get">Get Data</button>
+    <div id="result"></div>
+    <script>
+      let getBtn = document.querySelector("#get");
+      let sendBtn = document.querySelector("#send");
+      let res = document.querySelector("#result");
+      let signupBtn=document.querySelector('#signup')
+      // Data get from server
+      getBtn.addEventListener("click", () => {
+        fetch("/getData")
+          .then((res) => res.json())
+          .then((data) => {
+            res.innerHTML = "";
+            for (const key in data) {
+              if (data.hasOwnProperty(key)) {
+                res.innerHTML += `<p>${key}: ${data[key]}</p>`;
+              }
+            }
+          })
+          .catch((error) => console.log("You are getting error try again "));
+      });
+      // sending data to the server
+      sendBtn.addEventListener('click',()=>{
+        let student={name:"Akash",age:22, address:'Bhubaneswar'}
+        fetch('/sendData',{
+            method:"POST",
+            headers:{"content-type":"application/json"},
+            body:JSON.stringify(student)
+        })
+        .then((res)=>res.json())
+        .then(data=>console.log(data)
+        .catch(error=>console.log(error)
+        )
+        )
+      })
+     
+    </script>
+  </body>
+</html>
